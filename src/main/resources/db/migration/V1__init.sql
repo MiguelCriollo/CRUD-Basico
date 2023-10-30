@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS celular(
   modelo VARCHAR(30),
     marca VARCHAR(30),
     color VARCHAR(10),
-    idPersona SERIAL,
+    id_persona SERIAL,
     PRIMARY KEY (id),
-    FOREIGN KEY (idPersona) REFERENCES persona(id)
+    FOREIGN KEY (id_persona) REFERENCES persona(id)
 );

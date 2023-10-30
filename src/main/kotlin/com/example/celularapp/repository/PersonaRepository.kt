@@ -1,4 +1,4 @@
-package com.example.celularapp.Repository
+package com.example.celularapp.repository
 
 import com.example.celularapp.model.Persona
 import org.springframework.data.jpa.repository.JpaRepository

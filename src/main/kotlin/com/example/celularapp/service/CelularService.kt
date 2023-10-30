@@ -1,66 +1,73 @@
 package com.example.celularapp.service
 
-import com.example.celularapp.repository.PersonaRepository
+import com.example.celularapp.model.Celular
 import com.example.celularapp.model.Persona
+import com.example.celularapp.repository.CelularRepository
+import com.example.celularapp.repository.PersonaRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
 
 @Service
-class PersonaService {
+class CelularService {
+    @Autowired
+    lateinit var celularRepository: CelularRepository
     @Autowired
     lateinit var personaRepository: PersonaRepository
-
-    fun list ():List<Persona>{
-        return personaRepository.findAll()
+    fun list ():List<Celular>{
+        return celularRepository.findAll()
     }
-    fun save(modelo: Persona): Persona{
+    fun save(modelo: Celular): Celular{
+        println(modelo)
         try{
-            return personaRepository.save(modelo)
+            personaRepository.findById(modelo.idPersona)
+                ?:throw Exception("Id del cliente no existe")
+            return celularRepository.save(modelo)
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
 
-    fun update(modelo: Persona): Persona{
+    fun update(modelo: Celular): Celular{
         try {
-            personaRepository.findById(modelo.id)
+            celularRepository.findById(modelo.id)
                 ?: throw Exception("ID no existe")
 
-            return personaRepository.save(modelo)
+            return celularRepository.save(modelo)
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
-    fun updateName(modelo:Persona): Persona{
+    fun updateName(modelo:Celular): Celular{
         try{
-            val response = personaRepository.findById(modelo.id)
+            val response = celularRepository.findById(modelo.id)
                 ?: throw Exception("ID no existe")
             response.apply {
-                nombre=modelo.nombre
+                color=modelo.color
             }
-            return personaRepository.save(response)
+            return celularRepository.save(response)
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
-    fun listById (id:Long?):Persona?{
-        return personaRepository.findById(id)
+    fun listById (id:Long?):Celular?{
+        return celularRepository.findById(id)
     }
 
     fun delete (id: Long?):String?{
         try{
-            val response = personaRepository.findById(id)
+            val response = celularRepository.findById(id)
                 ?: throw Exception("ID no existe")
-            personaRepository.deleteById(id!!)
+            celularRepository.deleteById(id!!)
             return "ID eliminado Correctamente!!!"
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
+
 }
