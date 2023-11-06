@@ -3,6 +3,7 @@ package com.example.celularapp.service
 import com.example.celularapp.repository.PersonaRepository
 import com.example.celularapp.model.Persona
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.mapping.model.KotlinDefaultMask
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
@@ -16,6 +17,11 @@ class PersonaService {
         return personaRepository.findAll()
     }
     fun save(modelo: Persona): Persona{
+        try {
+            modelo.nombre?.takeIf { it.trim().isNotEmpty() }?:throw Exception("Nombre no debe ser Vacio")
+        }catch (ex:Exception){
+            throw ResponseStatusException(HttpStatus.BAD_REQUEST,ex.message,ex)
+        }
         try{
             return personaRepository.save(modelo)
         }
@@ -26,6 +32,7 @@ class PersonaService {
 
     fun update(modelo: Persona): Persona{
         try {
+
             personaRepository.findById(modelo.id)
                 ?: throw Exception("ID no existe")
 

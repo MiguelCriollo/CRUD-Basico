@@ -21,6 +21,8 @@ class CelularService {
     fun save(modelo: Celular): Celular{
         println(modelo)
         try{
+            modelo.color?.takeIf { it.trim().isNotEmpty() }?:throw Exception("Color no debe ser Vacio")
+            modelo.modelo?.takeIf { it.trim().isNotEmpty() }?:throw Exception("Modelo no debe ser Vacio")
             personaRepository.findById(modelo.idPersona)
                 ?:throw Exception("Id del cliente no existe")
             return celularRepository.save(modelo)
