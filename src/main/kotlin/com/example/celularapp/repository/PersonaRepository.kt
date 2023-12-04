@@ -10,5 +10,4 @@ interface PersonaRepository : JpaRepository<Persona, Long?> {
 
     fun findById (id: Long?): Persona?
 
-
 }

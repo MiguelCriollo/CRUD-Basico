@@ -2,6 +2,7 @@ package com.example.celularapp.controller
 
 import com.example.celularapp.model.Persona
 import com.example.celularapp.service.PersonaService
+import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -24,7 +25,7 @@ class ModelController {
         return ResponseEntity(modeloService.list(), HttpStatus.OK)
     }
     @PostMapping
-    fun save (@RequestBody modelo:Persona):ResponseEntity<Persona>{
+    fun save (@RequestBody @Valid modelo:Persona):ResponseEntity<Persona>{
         return ResponseEntity(modeloService.save(modelo), HttpStatus.OK)
     }
     @PutMapping

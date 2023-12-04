@@ -17,7 +17,8 @@ class CelularController {
 
     @GetMapping
     fun list (): ResponseEntity<*> {
-        return ResponseEntity(celularService.list(), HttpStatus.OK)
+        var celularResponse=celularService.list()
+        return ResponseEntity.ok(mapOf("Felony" to "Sex Offender","status" to "success", "data" to celularResponse))
     }
     @PostMapping
     fun save (@RequestBody modelo: Celular):ResponseEntity<Celular>{
